@@ -141,3 +141,14 @@ EMAIL_HOST_USER = 'vladismeno@gmail.com'
 EMAIL_HOST_PASSWORD = 'ozip xryd yxno mpuk'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+ADDRESS = '958 N Serrano Ave, Los Angeles, USA, CA 90029'
+EMAIL = 'snsemenova1969@gmail.com'
+PHONE = '+1(718)755-2147'
+FACEBOOK = 'https://www.facebook.com/messages/t/CleanHouse4you'
+INSTAGRAM = 'https://www.instagram.com/cakes.pleasure'
+
+YEARS_EXPERIENCED = 4
+HAPPY_CUSTOMERS = 245
+BUILDING_CLEANED = 50
+

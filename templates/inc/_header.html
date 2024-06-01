@@ -5,23 +5,23 @@
                 <p class="mb-0 phone">
                     <span class="mailus">Address:</span>
                     <a href="https://maps.app.goo.gl/iugkfLUAeL1iM6fb7" target="_blank">
-                        958 N Serrano Ave, Los Angeles, USA, CA 90029
+                        {{ address }}
                     </a>
                     <span class="mailus">Phone no:</span>
-                    <a href="tel:+17187552147">+1(718)755-2147</a> or <span class="mailus">email us:</span>
-                    <a href="mailto:snsemenova1969@gmail.com">snsemenova1969@gmail.com</a>
+                    <a href="tel:{{ phone }}">{{ phone }}</a> or <span class="mailus">email us:</span>
+                    <a href="mailto:{{ email }}">{{ email }}</a>
                 </p>
             </div>
             <div class="col-12 col-md d-flex justify-content-md-end">
                 <div class="social-media">
                     <p class="mb-0 d-flex">
-                        <a target="_blank" href="https://www.facebook.com/messages/t/CleanHouse4you" class="d-flex align-items-center justify-content-center">
+                        <a target="_blank" href="{{ facebook }}" class="d-flex align-items-center justify-content-center">
                             <span class="fa fa-facebook"><i class="sr-only">Facebook</i></span>
                         </a>
-                        <a target="_blank" href="https://www.instagram.com/cakes.pleasure" class="d-flex align-items-center justify-content-center">
+                        <a target="_blank" href="{{ instagram }}" class="d-flex align-items-center justify-content-center">
                             <span class="fa fa-instagram"><i class="sr-only">Instagram</i></span>
                         </a>
-                        <a target="_blank" href="mailto:snsemenova1969@gmail.com" class="d-flex align-items-center justify-content-center">
+                        <a target="_blank" href="mailto:{{ email }}" class="d-flex align-items-center justify-content-center">
                             <span class="fa fa-envelope"><i class="sr-only">Gmail</i></span>
                         </a>
                     </p>

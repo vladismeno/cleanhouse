@@ -10,7 +10,7 @@
                             <span class="icon fa fa-map-marker"></span>
                             <span class="text">
                                 <a href="https://maps.app.goo.gl/iugkfLUAeL1iM6fb7" target="_blank">
-                                    958 N Serrano Ave, Los Angeles, USA, CA 90029
+                                    {{ address }}
                                 </a>
                             </span>
                         </li>
@@ -28,15 +28,15 @@
                 <div class="block-23 mb-3">
                     <ul>
                         <li>
-                            <a href="tel:+17187552147">
+                            <a href="{{ phone }}">
                                 <span class="icon fa fa-phone"></span>
-                                <span class="text">+1(718)755-2147</span>
+                                <span class="text">{{ phone }}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="mailto:snsemenova1969@gmail.com">
+                            <a href="mailto:{{ email }}">
                                 <span class="icon fa fa-envelope"></span>
-                                <span class="text">snsemenova1969@gmail.com</span>
+                                <span class="text">{{ email }}</span>
                             </a>
                         </li>
                     </ul>
@@ -45,9 +45,9 @@
             <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
                 <h2 class="footer-heading">Social networks</h2>
                 <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-4">
-                    <li><a title="Send message to facebook" target="_blank" href="https://www.facebook.com/messages/t/CleanHouse4you"><span class="fa fa-facebook"></span></a></li>
-                    <li><a title="Send message to instagram" target="_blank" href="https://www.instagram.com/cakes.pleasure"><span class="fa fa-instagram"></span></a></li>
-                    <li><a title="Send message to email" target="_blank" href="mailto:snsemenova1969@gmail.com"><span class="fa fa-envelope"></span></a></li>
+                    <li><a title="Send message to facebook" target="_blank" href="{{ facebook }}"><span class="fa fa-facebook"></span></a></li>
+                    <li><a title="Send message to instagram" target="_blank" href="{{ instagram }}"><span class="fa fa-instagram"></span></a></li>
+                    <li><a title="Send message to email" target="_blank" href="mailto:{{ email }}"><span class="fa fa-envelope"></span></a></li>
                 </ul>
             </div>
         </div>
