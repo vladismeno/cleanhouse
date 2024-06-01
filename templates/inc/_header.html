@@ -1,28 +1,33 @@
 <div class="wrap">
     <div class="container">
         <div class="row justify-content-between">
-            <div class="d-flex align-items-center">
+            <div class="col-12 col-md d-flex align-items-center">
                 <p class="mb-0 phone">
                     <span class="mailus">Address:</span>
                     <a href="https://maps.app.goo.gl/iugkfLUAeL1iM6fb7" target="_blank">
                         {{ address }}
                     </a>
-                    <span class="mailus">Phone no:</span>
-                    <a href="tel:{{ phone }}">{{ phone }}</a> or <span class="mailus">email us:</span>
-                    <a href="mailto:{{ email }}">{{ email }}</a>
+                    <span class="mailus">Phone:</span>
+                    <a href="tel:{{ phone }}">{{ phone }}</a>
                 </p>
             </div>
             <div class="col-12 col-md d-flex justify-content-md-end">
                 <div class="social-media">
                     <p class="mb-0 d-flex">
                         <a target="_blank" href="{{ facebook }}" class="d-flex align-items-center justify-content-center">
-                            <span class="fa fa-facebook"><i class="sr-only">Facebook</i></span>
+                            <span class="fa fa-facebook">
+                                <i class="sr-only">Facebook</i>
+                            </span>
                         </a>
                         <a target="_blank" href="{{ instagram }}" class="d-flex align-items-center justify-content-center">
-                            <span class="fa fa-instagram"><i class="sr-only">Instagram</i></span>
+                            <span class="fa fa-instagram">
+                                <i class="sr-only">Instagram</i>
+                            </span>
                         </a>
                         <a target="_blank" href="mailto:{{ email }}" class="d-flex align-items-center justify-content-center">
-                            <span class="fa fa-envelope"><i class="sr-only">Gmail</i></span>
+                            <span class="fa fa-envelope">
+                                <i class="sr-only">Gmail</i>
+                            </span>
                         </a>
                     </p>
                 </div>
@@ -30,9 +35,8 @@
         </div>
     </div>
 </div>
-
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}" style="font-size: 40px">Cleaning Company<span> Clean House</span></a>
+        <a class="navbar-brand"  href="{% url 'index' %}">Cleaning company <span>Clean House</span></a>
     </div>
 </nav>

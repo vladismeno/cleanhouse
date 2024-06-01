@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-8q^tpixw1go4@uk5a6q0s7+*b)(tltvi^b**%cffzhmm54lef#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.108']
 
 
 # Application definition
@@ -143,7 +143,7 @@ EMAIL_HOST_PASSWORD = 'ozip xryd yxno mpuk'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-ADDRESS = '958 N Serrano Ave, Los Angeles, USA, CA 90029'
+ADDRESS = '958 N Serrano Ave, Los Angeles 90029'
 EMAIL = 'snsemenova1969@gmail.com'
 PHONE = '+1(718)755-2147'
 FACEBOOK = 'https://www.facebook.com/messages/t/CleanHouse4you'
