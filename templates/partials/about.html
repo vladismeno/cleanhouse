@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row d-flex no-gutters">
             <div class="col-md-6 d-flex">
-                <div class="img d-flex align-items-center justify-content-center py-5 py-md-0"
+                <div class="img d-flex align-items-center justify-content-center py-5 py-md-0 no-bg-on-mobile"
                      style="background-image:url({% static 'images/about.jpg' %});">
                     <div class="time-open-wrap">
                         <div class="desc p-4">
@@ -17,6 +17,10 @@
                                 <p class="pl-3">
                                     <span>All Official Holidays</span>
                                 </p>
+                                <h4>Price:</h4>
+                                <p class="pl-3">
+                                    <span><strong>$40 per hour</strong></span>
+                                </p>
                             </div>
                         </div>
                         <div class="desc p-4 bg-secondary">
@@ -26,16 +30,28 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 pl-md-5 pt-md-5">
-                <div class="row justify-content-start py-5">
+            <div class="col-md-6 pl-md-5">
+                <div class="row justify-content-start py-4">
                     <div class="col-md-12 heading-section ftco-animate">
                         <span class="subheading">Welcome to Cleaning Company</span>
-                        <h2 class="mb-4">Your Trusted Cleaning Experts in Los Angeles</h2>
-                        <p>At Clean House we pride ourselves on providing top-notch cleaning services to homes and
+                        <h4 class="mb-4">Your Trusted Cleaning Experts in Los Angeles</h4>
+                        <p>
+                            At Clean House we pride ourselves on providing top-notch cleaning services to homes and
                             businesses throughout Los Angeles. Our mission is to deliver exceptional cleaning solutions
                             that exceed your expectations, ensuring your space is spotless, healthy, and inviting. With
                             our experienced team, eco-friendly products, and attention to detail, we guarantee a
-                            superior cleaning experience every time.</p>
+                            superior cleaning experience every time.
+                        </p>
+                        <p>
+                            <span>We specialize in general and deep cleaning services for residential and office premises. Our operations cover a <b>30-mile radius from zip code 90029</b>.</span>
+                            <ul>
+                                <li><b>Standard cleaning:</b> time - from 3 hours.</li>
+                                <li><b>Cleaning offices:</b> time - from 3 hours.</li>
+                                <li><b>Move-out cleaning:</b> time - from 4 hours.</li>
+                            </ul>
+                            <b>$40</b> per hour (1 cleaner). We charge an extra <b>$25</b> for work on Saturdays and Sundays.
+                        </p>
+                        <p><b>Service area:</b> Beverly Hills, Burbank, Culver City, El Segundo, Glendale, Hollywood, Long Beach, Los Angeles, Manhattan Beach, Marina Del Rey, Monterey Park, North Hills, Pasadena, Santa Monica, Sherman Oaks, Studio City, Toluca Lake, Universal City, Valley Village, Van Nuys</p>
                     </div>
                 </div>
                 {% include 'partials/counters.html' %}

@@ -1,0 +1,11 @@
+@media (max-width: 767px) {
+    .no-bg-on-mobile {
+        background: none !important;
+    }
+    .box {
+        display: inline-block;
+        width: 33%; /* Настройте ширину по желанию */
+        padding-top: 10%;
+        padding-left: 5%;
+    }
+}

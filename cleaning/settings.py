@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'django_extensions',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = []
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -146,10 +150,12 @@ EMAIL_USE_SSL = True
 ADDRESS = '958 N Serrano Ave, Los Angeles 90029'
 EMAIL = 'snsemenova1969@gmail.com'
 PHONE = '+1(718)755-2147'
-FACEBOOK = 'https://www.facebook.com/messages/t/CleanHouse4you'
-INSTAGRAM = 'https://www.instagram.com/cakes.pleasure'
+FACEBOOK_DESKTOP = 'https://www.facebook.com/messages/t/CleanHouse4you'
+FACEBOOK_MOBILE = 'https://m.me/CleanHouse4you'
+INSTAGRAM_DESKTOP = 'https://www.instagram.com/cakes.pleasure'
+INSTAGRAM_MOBILE = 'instagram://user?username=cakes.pleasure'
 
 YEARS_EXPERIENCED = 4
 HAPPY_CUSTOMERS = 245
-BUILDING_CLEANED = 50
+BUILDING_CLEANED = 627
 

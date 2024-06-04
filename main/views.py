@@ -4,20 +4,30 @@ from .forms import AppointmentForm
 from .models import Review
 from .handlers import AppointmentHandler
 from django.conf import settings
+from django_user_agents.utils import get_user_agent
 
 
 class IndexView(View):
+
+    def is_mobile(self, request):
+        user_agent = get_user_agent(request)
+        return user_agent.is_mobile
+
     def get(self, request: object) -> object:
         form = AppointmentForm()
         reviews = Review.objects.all().order_by('-date')
+        is_mobile = self.is_mobile(request)
+        facebook = settings.FACEBOOK_MOBILE if is_mobile else settings.FACEBOOK_DESKTOP
+        instagram = settings.INSTAGRAM_MOBILE if is_mobile else settings.INSTAGRAM_DESKTOP
+
         context = {
             'form': form,
             'reviews': reviews,
             'email': settings.EMAIL,
             'phone': settings.PHONE,
             'address': settings.ADDRESS,
-            'facebook': settings.FACEBOOK,
-            'instagram': settings.INSTAGRAM,
+            'facebook': facebook,
+            'instagram': instagram,
             'years_experienced': settings.YEARS_EXPERIENCED,
             'happy_customers': settings.HAPPY_CUSTOMERS,
             'building_cleaned': settings.BUILDING_CLEANED,
