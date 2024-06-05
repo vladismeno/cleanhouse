@@ -1,17 +1,10 @@
 services:
-  app:
-    container_name: my_app
-    image: python:3.8
-    command: python /app/main.py
-    volumes:
-      - ./app:/app
-    depends_on:
-      - db
-
   db:
     container_name: my_db
     image: alpine/mysql
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: mydatabase
