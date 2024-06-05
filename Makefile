@@ -3,7 +3,7 @@ MANAGE_PY = $(DOCKER_COMPOSE) exec web python manage.py
 
 # Команда для запуска контейнеров Docker
 up:
-	$(DOCKER_COMPOSE) up --build
+	$(DOCKER_COMPOSE) up -d
 
 # Команда для остановки и удаления контейнеров Docker
 down:
