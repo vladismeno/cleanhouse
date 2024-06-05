@@ -10,7 +10,7 @@ services:
 
   db:
     container_name: my_db
-    image: mysql:8.0.28-alpine
+    image: alpine/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
