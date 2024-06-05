@@ -1,5 +1,5 @@
 # Используем образ Python с установленным Django
-FROM python:3.12
+FROM python:3.15
 
 # Установка переменной среды для запуска в неинтерактивном режиме
 ENV PYTHONUNBUFFERED 1
