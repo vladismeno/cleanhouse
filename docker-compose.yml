@@ -7,7 +7,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 111
-      MYSQL_DATABASE: main
+      MYSQL_DATABASE: cleanhouse
       MYSQL_USER: svs
       MYSQL_PASSWORD: 111
     volumes:

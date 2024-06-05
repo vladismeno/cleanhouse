@@ -1,18 +1,5 @@
 from django.db import models
 
-
-class Task(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    completed = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'tasks'
-
-
 class Review(models.Model):
 
     def user_directory_path(self, filename=None):
