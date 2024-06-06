@@ -1,7 +1,7 @@
 services:
   mysql:
     container_name: mysql
-    image: mysql:latest
+    image: mysql:8.0
     restart: always
     ports:
       - "3306:3306"
@@ -12,6 +12,7 @@ services:
       MYSQL_PASSWORD: 111
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
 
   phpmyadmin:
     container_name: phpmyadmin
