@@ -80,17 +80,24 @@ WSGI_APPLICATION = 'cleanhouse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'cleanhouse',
+#         'USER': 'svs',
+#         'PASSWORD': '111',
+#         'HOST': 'mysql',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#        },
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cleanhouse',
-        'USER': 'svs',
-        'PASSWORD': '111',
-        'HOST': 'mysql',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-       },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'cleanhouse.sqlite3'),
     }
 }
 
