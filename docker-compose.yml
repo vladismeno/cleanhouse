@@ -20,7 +20,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./staticfiles:/root/cleaning/staticfiles/
+      - ./staticfiles/d:/root/cleaning/staticfiles/
 
 volumes:
   static_data:
