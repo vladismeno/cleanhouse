@@ -14,7 +14,7 @@ services:
   nginx:
     container_name: nginx
 #    restart: always
-    build: ./nginxs
+    build: ./nginx
     depends_on:
       - django
     environment:
