@@ -1,11 +1,11 @@
 services:
-
   django:
     container_name: django
     restart: always
     build: .
-#    command: [ "sh", "-c", "sleep 2 && python manage.py runserver 0.0.0.0:8000" ]
     command: [ "sh", "-c", "gunicorn --bind 0.0.0.0:8000 cleanhouse.wsgi" ]
+    environment:
+      - PRIVKEY_FILE=/etc/letsencrypt/live/cleanhouse4you.com/privkey.pem
     volumes:
       - .:/app
     ports:
@@ -17,18 +17,16 @@ services:
     build: ./nginx
     depends_on:
       - django
-    secrets:
-      - privkey
+    environment:
+      - PRIVKEY_FILE=/etc/letsencrypt/live/cleanhouse4you.com/privkey.pem
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./staticfiles/:/app/staticfiles/
-
-volumes:
-  static_data:
+    secrets:
+      - privkey
 
 secrets:
   privkey:
-    external: true
-    name: privkey
+    file: /etc/letsencrypt/live/cleanhouse4you.com/privkey.pem
