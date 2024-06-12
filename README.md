@@ -44,3 +44,6 @@ docker exec -it mysql sh
 
 docker swarm init
 echo -e "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgmL9ZaHYI9ZQUrtxK\nvXAExP9ttkhbSxFnYaIn2AP9KnOhRANCAAQuK9ACcpYkMiJUGE8yZ3EhMBuhquL1\nMrw2Jg2jB0p8QeLRSJyhHCybndUTlVjiHpFgkOLsDCtDUp3t2HSln4gX\n-----END PRIVATE KEY-----" | docker secret create privkey -
+
+
+docker image prune -a
