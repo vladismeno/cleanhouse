@@ -8,6 +8,7 @@ docker-compose up -d
 make up
 make migrate
 make createsuperuser
+make collectstatic∂
 
 Пароля изначально для пользователя root нет
 mysql -u root
