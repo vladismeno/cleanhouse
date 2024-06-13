@@ -6,6 +6,6 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./conf.d/nginx.conf /etc/nginx/conf.d
 COPY ./nginx.conf /etc/nginx/
-COPY ./robots.txt /app/robots.txt
+COPY ../templates/cleanhouse/robots.txt /app/robots.txt
 
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-n"]
