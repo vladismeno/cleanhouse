@@ -49,3 +49,6 @@ echo -e "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0waw
 docker image prune -a
 
 docker system prune
+
+
+supervisorctl status
