@@ -2,4 +2,3 @@ venv
 .idea
 staticfiles/
 __pycache__/
-/nginx/cleanhouse4you.com/
