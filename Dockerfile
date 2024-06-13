@@ -4,7 +4,7 @@ FROM python:3.12
 # Установка переменной среды для запуска в неинтерактивном режиме
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apk apt-get install -y supervisor
+RUN apt-get update && apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Создание директории для кода проекта и установка рабочей директории
