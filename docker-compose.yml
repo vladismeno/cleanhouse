@@ -2,6 +2,7 @@ services:
 
   django:
     container_name: django
+    image: django
     restart: always
     build: .
 #    command: [ "sh", "-c", "sleep 2 && python manage.py runserver 0.0.0.0:8000" ]
@@ -13,6 +14,7 @@ services:
 
   nginx:
     container_name: nginx
+    image: nginx
     restart: always
     build: ./nginx
     depends_on:
