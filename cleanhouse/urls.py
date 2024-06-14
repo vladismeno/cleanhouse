@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from main.views import error_404_view
 
-handler404 = error_404_view
+handler405 = error_404_view
 
 urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
