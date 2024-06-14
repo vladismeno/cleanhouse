@@ -19,9 +19,9 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
-from main.views import error_404_view
+from main.views import IndexView
 
-handler405 = error_404_view
+handler404 = IndexView.error_404_view
 
 urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),

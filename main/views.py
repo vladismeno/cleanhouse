@@ -7,10 +7,6 @@ from django.conf import settings
 from django_user_agents.utils import get_user_agent
 
 
-def error_404_view(request, exception):
-    return render(request, '404.html', status=404)
-
-
 class IndexView(View):
 
     def is_mobile(self, request):
@@ -44,3 +40,6 @@ class IndexView(View):
             return redirect('index')
 
         return render(request, 'index.html', {'form': form})
+
+    def error_404_view(self, request, exception):
+        return render(request, '404.html', status=404)
