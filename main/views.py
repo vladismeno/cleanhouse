@@ -41,5 +41,6 @@ class IndexView(View):
 
         return render(request, 'index.html', {'form': form})
 
-    def error_404_view(self, request, exception):
+    @staticmethod
+    def error_404_view(request, exception):
         return render(request, '404.html', status=404)
