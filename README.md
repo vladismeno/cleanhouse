@@ -75,5 +75,30 @@ crontab -e
 
 
 
+nano update_cert.sh
+
+#!/bin/bash
+
+# Путь к исполняемому файлу certbot (может потребоваться изменить в зависимости от установки)
+certbot_executable="/usr/bin/certbot"
+
+# Команда для обновления сертификата
+certbot_command="$certbot_executable certonly --webroot -w /var/www/html \
+-d cleanhouse4you.com -d www.cleanhouse4you.com --force-renewal"
+
+# Запуск команды обновления сертификата
+$certbot_command
+
+
+chmod +x update_cert.sh
+
+
+crontab -e
+
+0 0 * * 1 /путь_к_скрипту/update_cert.sh >/dev/null 2>&1
+
+
+
+
 
 
