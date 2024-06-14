@@ -1,4 +1,4 @@
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = docker compose
 MANAGE_PY = $(DOCKER_COMPOSE) exec django python manage.py
 
 # Команда для запуска контейнеров Docker

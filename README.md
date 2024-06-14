@@ -1,6 +1,14 @@
-Эта команда остановит контейнеры и удалит их, а также удалит все тома данных, связанные с контейнерами, из памяти.
-После выполнения этих шагов проект Docker Compose будет удален из памяти и больше не будет активен на вашем хосте Docker.
-У меня была ошибка, после запуска образа mysql:5.7 не стартовал сервис
+django
+sqllite
+supervisor
+screen
+docker
+https
+gunicorn
+nginx
+crontab
+
+
 docker-compose down -v
 docker-compose build --no-cache
 docker-compose up -d
@@ -8,7 +16,7 @@ docker-compose up -d
 make up
 make migrate
 make createsuperuser
-make collectstatic∂
+make collectstatic
 
 Пароля изначально для пользователя root нет
 mysql -u root
@@ -39,12 +47,6 @@ GRANT ALL PRIVILEGES ON *.* TO 'svs'@'172.18.0.3';
 
 
 docker exec -it mysql sh
-
-
-
-docker swarm init
-echo -e "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgmL9ZaHYI9ZQUrtxK\nvXAExP9ttkhbSxFnYaIn2AP9KnOhRANCAAQuK9ACcpYkMiJUGE8yZ3EhMBuhquL1\nMrw2Jg2jB0p8QeLRSJyhHCybndUTlVjiHpFgkOLsDCtDUp3t2HSln4gX\n-----END PRIVATE KEY-----" | docker secret create privkey -
-
 
 docker image prune -a
 
