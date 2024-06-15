@@ -21,8 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from main.views import IndexView
 
-handler404 = IndexView.error_404_view
-
 urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('admin/', admin.site.urls),
