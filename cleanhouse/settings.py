@@ -26,10 +26,6 @@ SECRET_KEY = 'django-insecure-8q^tpixw1go4@uk5a6q0s7+*b)(tltvi^b**%cffzhmm54lef#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_COOKIE_SECURE = True
-
-CSRF_COOKIE_DOMAIN = 'cleanhouse4you.com'
-
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
