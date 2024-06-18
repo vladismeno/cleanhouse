@@ -36,13 +36,13 @@ Django не обслуживает статические файлы автом�
 DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в открытом доступе
 
 Нужно добавить чтобы по https можно было логиниться в админку
-CSRF_TRUSTED_ORIGINS = [
+`CSRF_TRUSTED_ORIGINS = [
     "https://localhost",
     "https://cleanhouse4you.com",
     "https://www.cleanhouse4you.com",
     "http://cleanhouse4you.com",
     "http://www.cleanhouse4you.com",
-]
+]`
 
 1. Войти в хостинг через SSH: `ssh root@cleanhouse4you.com`.
 2. Создать сеанс screen: `screen`.
