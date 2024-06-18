@@ -15,7 +15,4 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-# Копирование всего остального в рабочую директорию
-COPY . /app/
-
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-n"]
