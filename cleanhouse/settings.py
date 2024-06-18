@@ -40,13 +40,6 @@ ALLOWED_HOSTS = [
     'www.cleanhouse4you.com'
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://cleanhouse4you.com",
-    "https://www.cleanhouse4you.com",
-    "http://cleanhouse4you.com",
-    "http://www.cleanhouse4you.com",
-]
-
 CSRF_TRUSTED_ORIGINS = [
     "https://cleanhouse4you.com",
     "https://www.cleanhouse4you.com",
