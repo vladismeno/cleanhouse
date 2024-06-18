@@ -39,6 +39,8 @@ ALLOWED_HOSTS = [
 CORS_ALLOWED_ORIGINS = [
     "https://cleanhouse4you.com",
     "https://www.cleanhouse4you.com",
+    "http://cleanhouse4you.com",
+    "http://www.cleanhouse4you.com",
 ]
 
 
