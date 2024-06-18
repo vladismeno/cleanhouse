@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'main',
     'django_extensions',
     'django_user_agents',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
