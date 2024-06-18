@@ -44,6 +44,9 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
     "http://www.cleanhouse4you.com",
 ]`
 
+`proxy_intercept_errors on;` # теперь 404 ошибки отлавливаются на стороне nginx и отладочный режим не работает
+
+
 1. Войти в хостинг через SSH: `ssh root@cleanhouse4you.com`.
 2. Создать сеанс screen: `screen`.
 3. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`.
