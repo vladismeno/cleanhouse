@@ -71,6 +71,7 @@ CSRF_TRUSTED_ORIGINS = [
 - `docker images`: посмотреть все образы и сколько места они занимают
 - `docker image prune -a`: - удаления всех неиспользуемых образов Docker, включая те, которые не используются ни в одном контейнере. Опция -a указывает, что нужно удалить все образы, включая их теги, которые больше не связаны с каким-либо контейнером
 - `docker system prune --all`: - удалит все неиспользуемые образы, контейнеры, тома и сети
+- `docker exec -it nginx sh -c "tail -f /var/log/supervisor/nginx.log"`: - просмотр логов nginx в supervisor
 
 ### КОМАНДЫ MYSQL
 
@@ -132,8 +133,3 @@ crontab -e
     -v "/root/cleanhouse:/var/www/html" \
     certbot/certbot renew --quiet && \
     docker-compose -f /root/cleanhouse/docker-compose.yml restart nginx`
-
-
-
-
-docker exec -it nginx sh -c "tail -f /var/log/supervisor/nginx.log"
