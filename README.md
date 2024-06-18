@@ -123,3 +123,8 @@ crontab -e
     -v "/root/cleanhouse:/var/www/html" \
     certbot/certbot renew --quiet && \
     docker-compose -f /root/cleanhouse/docker-compose.yml restart nginx`
+
+
+
+
+docker exec -it nginx sh -c "tail -f /var/log/supervisor/nginx.log"

@@ -36,8 +36,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '192.168.1.108',
     '164.92.85.164',
-    'cleanhouse4you.com',
-    'www.cleanhouse4you.com'
+    'https://cleanhouse4you.com',
+    'https://www.cleanhouse4you.com'
 ]
 
 CORS_ALLOWED_ORIGINS = [
