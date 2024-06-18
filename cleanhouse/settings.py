@@ -28,17 +28,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-print(SECRET_KEY)
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '0.0.0.0',
-    '192.168.1.108',
-    '164.92.85.164',
-    'cleanhouse4you.com',
-    'www.cleanhouse4you.com'
-]
+print(SECRET_KEY)
 
 CSRF_TRUSTED_ORIGINS = [
     "https://localhost",

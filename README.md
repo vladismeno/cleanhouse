@@ -57,7 +57,7 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 8. Остановить Docker-контейнеры: `make down`.
 9. Создать SSL-сертификат: `sh create_certificate.sh`.
 10. Обновить SSL-сертификат: `sh update_certificate.sh`.
-11. В корне проекта локально и на проде нужно создать файл с переменными DJANGO_DEBUG, SECRET_KEY
+11. В корне проекта локально и на проде нужно создать файл .env с переменными DEBUG, SECRET_KEY, ALLOWED_HOSTS
 
 ## ШПАРГАЛКА
 
