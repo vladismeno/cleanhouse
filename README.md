@@ -107,7 +107,7 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 
 ### КОМАНДЫ ДЛЯ СОЗДАНИЯ И ОБНОВЛЕНИЯ СЕРТИФИКАТА SSL
 
-## получение сертификата запускаем 1 раз
+## получение сертификата запускаем 1 раз (нужно запускать когда сайт поднят)
 `docker run -it --rm --name certbot \
     -v "/etc/letsencrypt:/etc/letsencrypt" \
     -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
