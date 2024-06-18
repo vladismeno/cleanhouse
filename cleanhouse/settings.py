@@ -30,8 +30,6 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
-print(SECRET_KEY)
-
 CSRF_TRUSTED_ORIGINS = [
     "https://localhost",
     "https://cleanhouse4you.com",
