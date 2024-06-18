@@ -44,7 +44,6 @@ CSRF_TRUSTED_ORIGINS = [
     "http://www.cleanhouse4you.com",
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
