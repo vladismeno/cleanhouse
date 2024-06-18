@@ -36,6 +36,10 @@ ALLOWED_HOSTS = [
     'www.cleanhouse4you.com'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://cleanhouse4you.com",
+]
+
 
 # Application definition
 
