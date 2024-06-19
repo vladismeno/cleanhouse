@@ -23,6 +23,6 @@ services:
     volumes:
       - ./staticfiles/:/app/staticfiles/
       - /etc/letsencrypt:/etc/letsencrypt/
-      - ./well-known/:/app/.well-known/
+      - ./.well-known/:/app/.well-known/
       - ./media/:/app/media/
 
