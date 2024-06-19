@@ -127,5 +127,6 @@ sh scripts/create_certificate.sh
 ## обновление сертификата, если он устарел, в кроне каждый день в полночь
 chmod +x /root/cleanhouse/scripts/update_certificate.sh
 sudo timedatectl set-timezone America/Los_Angeles
+tail -f /var/log/update_certificate.log
 crontab -e
 0 0 * * * /root/cleanhouse/scripts/update_certificate.sh >> /var/log/update_certificate.log 2>&1
