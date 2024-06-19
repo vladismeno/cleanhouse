@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Запуск обновления сертификатов
-docker run --rm --name certbot \
+docker run  --rm --name certbot \
     -v "/etc/letsencrypt:/etc/letsencrypt" \
     -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
     -v "/root/cleanhouse:/var/www/html" \
