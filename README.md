@@ -122,18 +122,9 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 ### КОМАНДЫ ДЛЯ СОЗДАНИЯ И ОБНОВЛЕНИЯ СЕРТИФИКАТА SSL
 
 ## получение сертификата запускаем 1 раз (нужно запускать когда сайт поднят)
-`docker run -it --rm --name certbot \
-    -v "/etc/letsencrypt:/etc/letsencrypt" \
-    -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-    -v "/root/cleanhouse:/var/www/html" \
-    certbot/certbot certonly --webroot -w /var/www/html -d cleanhouse4you.com -d www.cleanhouse4you.com --force-renewal`
-
+sh scripts/create_certificate.sh
 
 ## обновление сертификата, если он устарел, в кроне каждый день в полночь
+sudo timedatectl set-timezone America/Los_Angeles
 crontab -e
-`0 0 * * * docker run -it --rm --name certbot \
-    -v "/etc/letsencrypt:/etc/letsencrypt" \
-    -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-    -v "/root/cleanhouse:/var/www/html" \
-    certbot/certbot renew --quiet && \
-    docker-compose -f /root/cleanhouse/docker-compose.yml restart nginx`
+0 0 * * * /root/cleanhouse/scripts/renew_certificates.sh >> /var/log/renew_certificates.log 2>&1
