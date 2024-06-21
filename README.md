@@ -130,3 +130,11 @@ sudo timedatectl set-timezone America/Los_Angeles
 tail -f /var/log/update_certificate.log
 crontab -e
 0 0 * * * /root/cleanhouse/scripts/update_certificate.sh >> /var/log/update_certificate.log 2>&1
+
+
+## если не запускается nginx
+sudo nginx -t
+sudo scp -r root@cleanhouse4you.com:/etc/letsencrypt /etc/letsencrypt
+sudo chmod -R 777 /etc/letsencrypt/live/www.cleanhouse4you.com/
+https://themewagon.com/themes/free-bootstrap-4-html5-business-website-template-cleaning-company/
+
