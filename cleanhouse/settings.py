@@ -169,8 +169,8 @@ EMAIL = 'snsemenova1969@gmail.com'
 PHONE = '+1(718)755-2147'
 FACEBOOK_DESKTOP = 'https://www.facebook.com/messages/t/CleanHouse4you'
 FACEBOOK_MOBILE = 'https://m.me/CleanHouse4you'
-INSTAGRAM_DESKTOP = 'https://www.instagram.com/cakes.pleasure'
-INSTAGRAM_MOBILE = 'instagram://user?username=cakes.pleasure'
+INSTAGRAM_DESKTOP = 'https://www.instagram.com/cleanhouse4you'
+INSTAGRAM_MOBILE = 'instagram://user?username=cleanhouse4you'
 
 YEARS_EXPERIENCED = 4
 HAPPY_CUSTOMERS = 245
