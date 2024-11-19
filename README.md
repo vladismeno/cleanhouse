@@ -49,15 +49,18 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 
 1. Войти в хостинг через SSH: `ssh root@cleanhouse4you.com`.
 2. Создать сеанс screen: `screen`.
-3. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`.
-4. Собрать статические файлы: `make collectstatic`.
-5. Создать суперпользователя Django: `make createsuperuser`.
-6. Применить миграции: `make migrate`.
-7. Запустить Docker-контейнеры: `make up`.
-8. Остановить Docker-контейнеры: `make down`.
-9. Создать SSL-сертификат: `sh create_certificate.sh`.
-10. Обновить SSL-сертификат: `sh update_certificate.sh`.
-11. В корне проекта локально и на проде нужно создать файл .env с переменными DEBUG, SECRET_KEY, ALLOWED_HOSTS
+3. Если виртуалка новая, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
+4. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
+5. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`.
+6. Необходимо установить докер, если он не установлен. Установка докера показана ниже
+6. Собрать статические файлы: `make collectstatic`.
+7. Создать суперпользователя Django: `make createsuperuser`.
+8. Применить миграции: `make migrate`.
+9. Запустить Docker-контейнеры: `make up`.
+10. Остановить Docker-контейнеры: `make down`.
+11. Создать SSL-сертификат: `sh create_certificate.sh`.
+12. Обновить SSL-сертификат: `sh update_certificate.sh`.
+13. В корне проекта локально и на проде нужно создать файл .env с переменными DEBUG, SECRET_KEY, ALLOWED_HOSTS
 
 ## ШПАРГАЛКА
 
@@ -134,7 +137,29 @@ crontab -e
 
 ## если не запускается nginx
 sudo nginx -t
-sudo scp -r root@cleanhouse4you.com:/etc/letsencrypt /etc/letsencrypt
+sudo scp -r root@209.38.128.217:/etc/letsencrypt /etc/letsencrypt
 sudo chmod -R 777 /etc/letsencrypt/live/www.cleanhouse4you.com/
 https://themewagon.com/themes/free-bootstrap-4-html5-business-website-template-cleaning-company/
+
+
+
+## если не получается скачать проект с git
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+less /root/.ssh/id_rsa.pub
+Копируем содержимое файла в git SSH keys
+
+
+1. sudo apt update && sudo apt upgrade -y
+2. sudo apt remove -y docker docker-engine docker.io containerd runc
+3. sudo apt install -y ca-certificates curl gnupg lsb-release
+4. sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+5. echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+6. sudo apt update
+7. sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+
 
