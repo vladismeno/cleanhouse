@@ -52,6 +52,7 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 3. Если виртуалка новая, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
 4. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
 5. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`.
+6. sudo apt-get install make
 6. Необходимо установить докер, если он не установлен. Установка докера показана ниже
 6. Собрать статические файлы: `make collectstatic`.
 7. Создать суперпользователя Django: `make createsuperuser`.
@@ -137,28 +138,31 @@ crontab -e
 
 ## если не запускается nginx
 sudo nginx -t
-sudo scp -r root@209.38.128.217:/etc/letsencrypt /etc/letsencrypt
+sudo scp -r /etc/letsencrypt root@164.90.144.13:/etc/
 sudo chmod -R 777 /etc/letsencrypt/live/www.cleanhouse4you.com/
 https://themewagon.com/themes/free-bootstrap-4-html5-business-website-template-cleaning-company/
 
 
 
 ## если не получается скачать проект с git
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"
 less /root/.ssh/id_rsa.pub
 Копируем содержимое файла в git SSH keys
 
 
 1. sudo apt update && sudo apt upgrade -y
-2. sudo apt remove -y docker docker-engine docker.io containerd runc
-3. sudo apt install -y ca-certificates curl gnupg lsb-release
-4. sudo mkdir -p /etc/apt/keyrings
+2. sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-5. echo \
+3. echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-6. sudo apt update
-7. sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+4. sudo apt update
+5. sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
+stdout_logfile=/var/log/supervisor/nginx.log
+stderr_logfile=/var/log/supervisor/nginx_err.log
 
 
 
