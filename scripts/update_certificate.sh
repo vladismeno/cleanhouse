@@ -8,4 +8,4 @@ docker run --rm --name certbot \
     certbot/certbot renew
 
 # Перезапуск Nginx через docker-compose
-docker-compose -f /root/cleanhouse/docker-compose.yml restart nginx
+docker compose -f /root/cleanhouse/docker-compose.yml restart nginx

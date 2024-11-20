@@ -1,6 +1,6 @@
 FROM nginx:1.19.8
 
-RUN apt-get update && apt-get install -y supervisor
+RUN apt-get update && apt-get install -y supervisor vim
 
 WORKDIR /app
 

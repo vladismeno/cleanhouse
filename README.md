@@ -138,7 +138,7 @@ crontab -e
 
 ## если не запускается nginx
 sudo nginx -t
-sudo scp -r /etc/letsencrypt root@164.90.144.13:/etc/
+sudo scp -r /etc/letsencrypt root@137.184.176.40:/etc/
 sudo chmod -R 777 /etc/letsencrypt/live/www.cleanhouse4you.com/
 https://themewagon.com/themes/free-bootstrap-4-html5-business-website-template-cleaning-company/
 
@@ -150,19 +150,72 @@ less /root/.ssh/id_rsa.pub
 Копируем содержимое файла в git SSH keys
 
 
-1. sudo apt update && sudo apt upgrade -y
-2. sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-3. echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-4. sudo apt update
-5. sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
 Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
+docker exec -it nginx tail -f /var/log/supervisor/nginx.log
+docker exec -it nginx tail -f /var/log/supervisor/nginx_err.log
 stdout_logfile=/var/log/supervisor/nginx.log
 stderr_logfile=/var/log/supervisor/nginx_err.log
+
+
+
+### ДЕПЛОЙ ПРОЕКТА НА DIGITAL OCEAN
+1. Логинимся в https://cloud.digitalocean.com/login с помощью почты 
+2. Создаем дроплет за 4$ в месяц без докера, выбираем вход по паролю (почему-то когда выбираю по ssh ключу, то команда scp не работает)
+3. ssh root@cleanhouse4you.com, вводим пароль, который выбрали во втором пункте, если не получается зайти на сервер, 
+   возможно нужно здесь почистить запись: `vim /Users/svs/.ssh/known_hosts` а именно удалить строку с cleanhouse4you.com. 
+   Ну ли просто зайти ssh root@ip_droplet
+4. Создать сеанс screen: `screen`.
+5. Устанавливаем докер
+ - sudo apt update && sudo apt upgrade -y
+ - sudo mkdir -p /etc/apt/keyrings
+ - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+ - echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+ - sudo apt update
+ - sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+6. Устанавливаем make: `apt-get install make`
+7. Если виртуалка новая, тогда чтобы выполнить команду git clone, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
+8. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
+9. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`
+10. Переходим в корень проекта `cd cleanhouse`
+11. Создаем файл .env `vim .env` и добвавляем следующие строки, без них не будет работать проект, в ALLOWED_HOSTS необходимо добавить ip_droplet
+DEBUG=True
+SECRET_KEY='django-insecure-8q^tpixw1go4@uk5a6q0s7+*b)(tltvi^b**%cffzhmm54lef#'
+ALLOWED_HOSTS='localhost,127.0.0.1,0.0.0.0,192.168.1.108,137.184.176.40,cleanhouse4you.com,www.cleanhouse4you.com'
+12. Выполняем команду make up
+13. Чтобы отображались статические файлы, выполняем `make collectstatic`
+14. sudo timedatectl set-timezone America/Los_Angeles
+15. sudo scp -r /etc/letsencrypt root@137.184.176.40:/etc/
+
+
+
+root@cleanhouse:~# docker --version
+Docker version 27.3.1, build ce12230
+
+
+
+ВОТ ТАК ВЫГЛЯДИТ ЛОГ, ЕСЛИ УСПЕШНОСТАРТОВАЛ NGINX И DJANGO
+✔ Network cleanhouse_default  Created                                                                                                                                                                 0.1s
+ ✔ Container django            Created                                                                                                                                                                 0.1s
+ ✔ Container nginx             Created                                                                                                                                                                 0.0s
+Attaching to django, nginx
+django  | 2024-11-20 02:25:58,006 INFO Set uid to user 0 succeeded
+django  | 2024-11-20 02:25:58,014 INFO supervisord started with pid 1
+nginx   | 2024-11-20 02:25:58,257 INFO Set uid to user 0 succeeded
+nginx   | 2024-11-20 02:25:58,261 INFO supervisord started with pid 1
+django  | 2024-11-20 02:25:59,021 INFO spawned: 'django' with pid 7
+nginx   | 2024-11-20 02:25:59,266 INFO spawned: 'nginx' with pid 9
+nginx   | 2024-11-20 02:26:00,271 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+django  | 2024-11-20 02:26:00,301 INFO success: django entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+
+
+
+Если делаем ping cleanhouse4you.com
+а пингует старый ip
+неоюходимо выполнить
+sudo killall -HUP mDNSResponder
+
 
 
 

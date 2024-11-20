@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# нужно запускать когда сайт поднят www.cleanhouse4you.com cleanhouse4you.com
+# нужно запускать когда сайт поднят www.cleanhouse4you.com cleanhouse4you.com и работать хотя бы по http протоколу
 
 docker run -it --rm --name certbot \
     -v "/etc/letsencrypt:/etc/letsencrypt" \
