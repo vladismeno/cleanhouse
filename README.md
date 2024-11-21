@@ -190,6 +190,14 @@ ALLOWED_HOSTS='localhost,127.0.0.1,0.0.0.0,192.168.1.108,137.184.176.40,cleanhou
 
 
 
+
+1. Если виртуалка новая, тогда чтобы выполнить команду git clone, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
+2. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
+3. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`
+4. sh install_docker.sh
+
+
+
 root@cleanhouse:~# docker --version
 Docker version 27.3.1, build ce12230
 
