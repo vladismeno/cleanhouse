@@ -150,53 +150,44 @@ less /root/.ssh/id_rsa.pub
 Копируем содержимое файла в git SSH keys
 
 
-Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
+### Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
+``
 docker exec -it nginx tail -f /var/log/supervisor/nginx.log
 docker exec -it nginx tail -f /var/log/supervisor/nginx_err.log
 stdout_logfile=/var/log/supervisor/nginx.log
 stderr_logfile=/var/log/supervisor/nginx_err.log
-
+``
 
 
 ### ДЕПЛОЙ ПРОЕКТА НА DIGITAL OCEAN
-1. Логинимся в https://cloud.digitalocean.com/login с помощью почты 
+1. Логинимся в https://cloud.digitalocean.com/login с помощью почты
 2. Создаем дроплет за 4$ в месяц без докера, выбираем вход по паролю (почему-то когда выбираю по ssh ключу, то команда scp не работает)
-3. ssh root@cleanhouse4you.com, вводим пароль, который выбрали во втором пункте, если не получается зайти на сервер, 
+3. https://account.squarespace.com/domains/managed/cleanhouse4you.com/dns/dns-settings прописываем ip дроплета в настройках dns (как в файле dns3.png, файлы dns1.png и dns2.png старые для истории)
+4. Заходим на сервер: ssh root@cleanhouse4you.com, вводим пароль, который выбрали во втором пункте, если не получается зайти на сервер, 
    возможно нужно здесь почистить запись: `vim /Users/svs/.ssh/known_hosts` а именно удалить строку с cleanhouse4you.com. 
    Ну ли просто зайти ssh root@ip_droplet
-4. Создать сеанс screen: `screen`.
-5. Устанавливаем докер
- - sudo apt update && sudo apt upgrade -y
- - sudo mkdir -p /etc/apt/keyrings
- - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
- - echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
- - sudo apt update
- - sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-6. Устанавливаем make: `apt-get install make`
+5. Создать сеанс screen: `screen`.
+6. `sudo timedatectl set-timezone America/Los_Angeles` выставляем время на сервере
 7. Если виртуалка новая, тогда чтобы выполнить команду git clone, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
 8. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
-9. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`
-10. Переходим в корень проекта `cd cleanhouse`
-11. Создаем файл .env `vim .env` и добвавляем следующие строки, без них не будет работать проект, в ALLOWED_HOSTS необходимо добавить ip_droplet
-DEBUG=True
+9. Клонируем репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`, получается проект будет лежать в /root/cleanhouse
+10. Устанавливаем докер и make `sh /root/cleanhouse/scripts/install_docker.sh`
+11. Создаем файл .env в корне проекта `vim /root/cleanhouse/.env` и добавляем следующие строки, без них не будет работать проект, в ALLOWED_HOSTS необходимо добавить ip_droplet
+`DEBUG=True
 SECRET_KEY='django-insecure-8q^tpixw1go4@uk5a6q0s7+*b)(tltvi^b**%cffzhmm54lef#'
-ALLOWED_HOSTS='localhost,127.0.0.1,0.0.0.0,192.168.1.108,137.184.176.40,cleanhouse4you.com,www.cleanhouse4you.com'
-12. Выполняем команду make up
-13. Чтобы отображались статические файлы, выполняем `make collectstatic`
-14. sudo timedatectl set-timezone America/Los_Angeles
-15. sudo scp -r /etc/letsencrypt root@137.184.176.40:/etc/
+ALLOWED_HOSTS='localhost,127.0.0.1,0.0.0.0,192.168.1.108,137.184.176.40,cleanhouse4you.com,www.cleanhouse4you.com'`
+12. с рабочего ноута на сервер `sudo scp -r /etc/letsencrypt root@ip_droplet:/etc/` или локально копируем содержимое ssl сертификата чтобы сайт работал по https `cp -r /root/cleanhouse/letsencrypt /etc/`
+13. С корня проекта выполняем команду `make up`, которая подымает проект
+14. Чтобы отображались статические файлы, выполняем в корне проекта `make collectstatic`
+15. sh /root/cleanhouse/scripts/update_certificate.sh обновляем сертификат
 
 
 
-
-1. Если виртуалка новая, тогда чтобы выполнить команду git clone, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
-2. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
-3. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`
-4. sh install_docker.sh
-
-
+Чтобы добавить новые комменты, нужно зайти под админом
+https://cleanhouse4you.com/admin/
+login: root 
+password: 111
+или создать суперпользователя Django: `make createsuperuser`.
 
 root@cleanhouse:~# docker --version
 Docker version 27.3.1, build ce12230
@@ -221,8 +212,16 @@ django  | 2024-11-20 02:26:00,301 INFO success: django entered RUNNING state, pr
 
 Если делаем ping cleanhouse4you.com
 а пингует старый ip
-неоюходимо выполнить
+необходимо выполнить
 sudo killall -HUP mDNSResponder
+
+
+
+
+root@cleanhouse:/etc/letsencrypt/accounts# rm -rf *
+apt install certbot
+
+
 
 
 
