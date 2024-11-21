@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Логирование текущей даты и времени
+echo "$(date) - Starting certificate update and nginx restart" >> /var/log/update_certificate.log
+
 # Запуск обновления сертификатов
 docker run --rm --name certbot \
     -v "/etc/letsencrypt:/etc/letsencrypt" \
