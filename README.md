@@ -296,6 +296,15 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
         Вот здесь можно смотреть лог, выполнился крон или нет
         `tail -f /var/log/update_certificate.log`
 
+        Если нужно будет посмотреть лог выполнения крона
+        `root@cleanhouse:/etc/letsencrypt/renewal# tail -f /var/log/update_certificate.log
+        Processing /etc/letsencrypt/renewal/cleanhouse4you.com.conf
+        Renewing an existing certificate for cleanhouse4you.com
+        Congratulations, all renewals succeeded:
+        /etc/letsencrypt/live/cleanhouse4you.com/fullchain.pem (success)
+        Container nginx  Restarting
+        Container nginx  Started`
+
  
 
 
