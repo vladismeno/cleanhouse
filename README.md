@@ -1,70 +1,3 @@
-# СТЕК ТЕХНОЛОГИЙ
-
-1. **django** - фреймворк для веб-приложений на Python
-2. **sqllite** - легковесная реляционная база данных
-3. **sqllite studio** - программа для просмотра бд
-4. **supervisor** - программа для автоматического перезапуска упавших сервисов
-5. **screen** - утилита для работы с виртуальными консолями
-6. **docker** - платформа для контейнеризации приложений
-7. **https** - протокол безопасной передачи данных через Интернет
-8. **gunicorn** - WSGI HTTP сервер для Python веб-приложений
-9. **nginx** - веб-сервер и прокси-сервер
-10. **crontab** - программа для периодического выполнения задач в расписании
-11. **digitalocean.com** - облачная платформа для развертывания инфраструктуры
-12. **squarespace.com** - платформа для создания и управления веб-сайтами
-13. **google analytics** - сервис для сбора и анализа данных о посещении сайтов
-14. **pycharm** - IDE для python
-15. **bootstrap** - фреймворк для разработки адаптивных и мобильных веб-сайтов
-
-## КАК РАЗВЕРНУТЬ ПРОЕКТ
-
-Django не обслуживает статические файлы автоматически. Для того чтобы статические файлы работали при локальной 
-разработке с DEBUG = False, необходимо настроить статический сервер, такой как WhiteNoise, или использовать другой 
-веб-сервер, например, Nginx или Apache.
-Если локально не отображаются статические файлы, тогда необходимо включить DEBUG = True
-Проверить занят ли порт lsof -nP -iTCP -sTCP:LISTEN | grep "443
-
-Чтобы локально поднять проект и чтобы letsencrypt не выдавал ошибку, необходимо локально скопировать все файлы, 
-которые нужны для работы https /etc/letsencrypt/live/cleanhouse4you.com/
-Так же когда будем разворачивать проект на digital ocean, так же не забываем о том что нужно туда скопировать эту папку
-и проставляем нужные права, как минимум chmod -R 777
-
-Если локально админка не работает и выдает ошибку CSRF verification failed. Request aborted, 
-нужно использовать протокол http вместо https
-
-Не забываем на проде выключить отладочный режим Debug=False
-DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в открытом доступе
-
-Нужно добавить чтобы по https можно было логиниться в админку
-`CSRF_TRUSTED_ORIGINS = [
-    "https://localhost",
-    "https://cleanhouse4you.com",
-    "https://www.cleanhouse4you.com",
-    "http://cleanhouse4you.com",
-    "http://www.cleanhouse4you.com",
-]`
-
-`proxy_intercept_errors on;` # теперь 404 ошибки отлавливаются на стороне nginx и отладочный режим не работает
-
-
-1. Войти в хостинг через SSH: `ssh root@cleanhouse4you.com`.
-2. Создать сеанс screen: `screen`.
-3. Если виртуалка новая, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
-4. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
-5. Клонировать репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`.
-6. sudo apt-get install make
-6. Необходимо установить докер, если он не установлен. Установка докера показана ниже
-6. Собрать статические файлы: `make collectstatic`.
-7. Создать суперпользователя Django: `make createsuperuser`.
-8. Применить миграции: `make migrate`.
-9. Запустить Docker-контейнеры: `make up`.
-10. Остановить Docker-контейнеры: `make down`.
-11. Создать SSL-сертификат: `sh create_certificate.sh`.
-12. Обновить SSL-сертификат: `sh update_certificate.sh`.
-13. В корне проекта локально и на проде нужно создать файл .env с переменными DEBUG, SECRET_KEY, ALLOWED_HOSTS
-
-## ШПАРГАЛКА
-
 ### КОМАНДЫ ДОКЕРА
 
 - `docker-compose down -v`: остановить и удалить Docker-контейнеры и тома
@@ -123,7 +56,11 @@ DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в откры
 - `kill -9 pid`: убить процесс
 
 
-### КОМАНДЫ ДЛЯ СОЗДАНИЯ И ОБНОВЛЕНИЯ СЕРТИФИКАТА SSL
+### ККОМАНДЫ CERTBOOT
+
+- `apt install certbot` - установка certbot
+- `certbot certificates` - показать все сертификаты
+- `certbot show_account` - показать все аккаунты
 
 ## получение сертификата запускаем 1 раз (нужно запускать когда сайт поднят)
 sh scripts/create_certificate.sh
@@ -135,95 +72,6 @@ tail -f /var/log/update_certificate.log
 crontab -e
 0 0 * * * /root/cleanhouse/scripts/update_certificate.sh >> /var/log/update_certificate.log 2>&1
 
-
-## если не запускается nginx
-sudo nginx -t
-sudo scp -r /etc/letsencrypt root@137.184.176.40:/etc/
-sudo chmod -R 777 /etc/letsencrypt/live/www.cleanhouse4you.com/
+### этот шаблон я использовал для сайта
 https://themewagon.com/themes/free-bootstrap-4-html5-business-website-template-cleaning-company/
-
-
-
-## если не получается скачать проект с git
-ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"
-less /root/.ssh/id_rsa.pub
-Копируем содержимое файла в git SSH keys
-
-
-### Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
-``
-docker exec -it nginx tail -f /var/log/supervisor/nginx.log
-docker exec -it nginx tail -f /var/log/supervisor/nginx_err.log
-stdout_logfile=/var/log/supervisor/nginx.log
-stderr_logfile=/var/log/supervisor/nginx_err.log
-``
-
-
-### ДЕПЛОЙ ПРОЕКТА НА DIGITAL OCEAN
-1. Логинимся в https://cloud.digitalocean.com/login с помощью почты
-2. Создаем дроплет за 4$ в месяц без докера, выбираем вход по паролю (почему-то когда выбираю по ssh ключу, то команда scp не работает)
-3. https://account.squarespace.com/domains/managed/cleanhouse4you.com/dns/dns-settings прописываем ip дроплета в настройках dns (как в файле dns3.png, файлы dns1.png и dns2.png старые для истории)
-4. Заходим на сервер: ssh root@cleanhouse4you.com, вводим пароль, который выбрали во втором пункте, если не получается зайти на сервер, 
-   возможно нужно здесь почистить запись: `vim /Users/svs/.ssh/known_hosts` а именно удалить строку с cleanhouse4you.com. 
-   Ну ли просто зайти ssh root@ip_droplet
-5. Создать сеанс screen: `screen`.
-6. `sudo timedatectl set-timezone America/Los_Angeles` выставляем время на сервере
-7. Если виртуалка новая, тогда чтобы выполнить команду git clone, необходимо сгенерить новый ключ `ssh-keygen -t rsa -b 4096 -C "vladismeno@gmail.com"`
-8. Берем ключ `cat ~/.ssh/id_rsa.pub` и добавляем его в git, там где лежит наш проект
-9. Клонируем репозиторий: `git clone git@github.com:vladismeno/cleanhouse.git`, получается проект будет лежать в /root/cleanhouse
-10. Устанавливаем докер и make `sh /root/cleanhouse/scripts/install_docker.sh`
-11. Создаем файл .env в корне проекта `vim /root/cleanhouse/.env` и добавляем следующие строки, без них не будет работать проект, в ALLOWED_HOSTS необходимо добавить ip_droplet
-`DEBUG=True
-SECRET_KEY='django-insecure-8q^tpixw1go4@uk5a6q0s7+*b)(tltvi^b**%cffzhmm54lef#'
-ALLOWED_HOSTS='localhost,127.0.0.1,0.0.0.0,192.168.1.108,137.184.176.40,cleanhouse4you.com,www.cleanhouse4you.com'`
-12. с рабочего ноута на сервер `sudo scp -r /etc/letsencrypt root@ip_droplet:/etc/` или локально копируем содержимое ssl сертификата чтобы сайт работал по https `cp -r /root/cleanhouse/letsencrypt /etc/`
-13. С корня проекта выполняем команду `make up`, которая подымает проект
-14. Чтобы отображались статические файлы, выполняем в корне проекта `make collectstatic`
-15. sh /root/cleanhouse/scripts/update_certificate.sh обновляем сертификат
-
-
-
-Чтобы добавить новые комменты, нужно зайти под админом
-https://cleanhouse4you.com/admin/
-login: root 
-password: 111
-или создать суперпользователя Django: `make createsuperuser`.
-
-root@cleanhouse:~# docker --version
-Docker version 27.3.1, build ce12230
-
-
-
-ВОТ ТАК ВЫГЛЯДИТ ЛОГ, ЕСЛИ УСПЕШНОСТАРТОВАЛ NGINX И DJANGO
-✔ Network cleanhouse_default  Created                                                                                                                                                                 0.1s
- ✔ Container django            Created                                                                                                                                                                 0.1s
- ✔ Container nginx             Created                                                                                                                                                                 0.0s
-Attaching to django, nginx
-django  | 2024-11-20 02:25:58,006 INFO Set uid to user 0 succeeded
-django  | 2024-11-20 02:25:58,014 INFO supervisord started with pid 1
-nginx   | 2024-11-20 02:25:58,257 INFO Set uid to user 0 succeeded
-nginx   | 2024-11-20 02:25:58,261 INFO supervisord started with pid 1
-django  | 2024-11-20 02:25:59,021 INFO spawned: 'django' with pid 7
-nginx   | 2024-11-20 02:25:59,266 INFO spawned: 'nginx' with pid 9
-nginx   | 2024-11-20 02:26:00,271 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-django  | 2024-11-20 02:26:00,301 INFO success: django entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-
-
-
-Если делаем ping cleanhouse4you.com
-а пингует старый ip
-необходимо выполнить
-sudo killall -HUP mDNSResponder
-
-
-
-
-root@cleanhouse:/etc/letsencrypt/accounts# rm -rf *
-apt install certbot
-
-
-
-
-
-
 

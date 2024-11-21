@@ -1,7 +1,57 @@
-### Деплой проекта на Digital Ocean
+# СТЕК ТЕХНОЛОГИЙ
+
+1. **django** - фреймворк для веб-приложений на Python
+2. **sqllite** - легковесная реляционная база данных
+3. **sqllite studio** - программа для просмотра бд
+4. **supervisor** - программа для автоматического перезапуска упавших сервисов
+5. **screen** - утилита для работы с виртуальными консолями
+6. **docker** - платформа для контейнеризации приложений
+7. **https** - протокол безопасной передачи данных через Интернет
+8. **gunicorn** - WSGI HTTP сервер для Python веб-приложений
+9. **nginx** - веб-сервер и прокси-сервер
+10. **crontab** - программа для периодического выполнения задач в расписании
+11. **digitalocean.com** - облачная платформа для развертывания инфраструктуры
+12. **squarespace.com** - платформа для создания и управления веб-сайтами
+13. **google analytics** - сервис для сбора и анализа данных о посещении сайтов
+14. **pycharm** - IDE для python
+15. **bootstrap** - фреймворк для разработки адаптивных и мобильных веб-сайтов
+16. **letsencrypt** - это бесплатный и автоматизированный центр сертификации, который предоставляет SSL/TLS сертификаты
+17. **сertbot** - это инструмент для работы с Let's Encrypt (установки и автоматического обновления сертификатов)
+
+## КАК РАЗВЕРНУТЬ ПРОЕКТ
+
+Django не обслуживает статические файлы автоматически. Для того чтобы статические файлы работали при локальной 
+разработке с DEBUG = False, необходимо настроить статический сервер, такой как WhiteNoise, или использовать другой 
+веб-сервер, например, Nginx или Apache.
+Если локально не отображаются статические файлы, тогда необходимо включить DEBUG = True
+Проверить занят ли порт lsof -nP -iTCP -sTCP:LISTEN | grep "443"
+
+Чтобы локально поднять проект и чтобы letsencrypt не выдавал ошибку, необходимо локально скопировать все файлы, 
+которые нужны для работы https /etc/letsencrypt/live/cleanhouse4you.com/
+Так же когда будем разворачивать проект на digital ocean, так же не забываем о том что нужно туда скопировать эту папку
+и проставляем нужные права, как минимум chmod -R 777
+
+Если локально админка не работает и выдает ошибку CSRF verification failed. Request aborted, 
+нужно использовать протокол http вместо https
+
+Не забываем на проде выключить отладочный режим Debug=False
+DJANGO_DEBUG, SECRET_KEY и letsencrypt не должны быть в открытом доступе
+
+Нужно добавить чтобы по https можно было логиниться в админку
+`CSRF_TRUSTED_ORIGINS = [
+    "https://localhost",
+    "https://cleanhouse4you.com",
+    "https://www.cleanhouse4you.com",
+    "http://cleanhouse4you.com",
+    "http://www.cleanhouse4you.com",
+]`
+
+`proxy_intercept_errors on;` # теперь 404 ошибки отлавливаются на стороне nginx и отладочный режим не работает
+
+### ДЕПЛОЙ ПРОЕКТА НА DIGITAL OCEAN
 
 1. **Логинимся в Digital Ocean**  
-   Переходим на [Digital Ocean](https://cloud.digitalocean.com/login) и входим с помощью почты.
+   Переходим на [Digital Ocean](https://cloud.digitalocean.com/login) и входим с помощью почты Наташи.
 
 2. **Создаем Droplet**
    - Создаем Droplet за $4/месяц.
@@ -60,6 +110,11 @@
      ```bash
      sh /root/cleanhouse/scripts/install_docker.sh
      ```
+   - Чтобы убедиться, что докер нужной версии:
+     ```bash
+     root@cleanhouse:~# docker --version
+     Docker version 27.3.1, build ce12230   
+     ```
 
 10. **Создаем файл `.env`**
     - Создаем `.env` файл в корне проекта:
@@ -95,8 +150,73 @@
       make collectstatic
       ```
 
-14. **Обновляем сертификат**
+14. **Применяем миграции, скорей всего эта команда не нужна, так как данные хранятся в cleanhouse.sqlite3, ну пусть будет**
+    - Выполняем команду:
+      ```bash
+      make migrate
+      ```
+
+15. **Создаем, если нужно суперпользователя Django, чтобы можно было добавлять коменты в админке**:
+    - Выполняем команду:
+      ```bash
+      make createsuperuser
+      ```
+    - Вообще по умолчанию есть пользователь с логином root и паролем 111
+    - Чтобы добавить новые комменты, нужно зайти по адресу https://cleanhouse4you.com/admin/
+
+16. **Обновляем или пересоздаем сертификат SSL**
     - Выполняем скрипт обновления:
       ```bash
       sh /root/cleanhouse/scripts/update_certificate.sh
       ```
+      - Если обновить сертификат не удалось, то необходимо создать заново сертификат. Выполняем следующие шаги:
+      16.1. Удаляем все файлы в этих директориях:
+        `sudo rm -rf /etc/letsencrypt/accounts/
+        sudo rm -rf /etc/letsencrypt/live/
+        sudo rm -rf /etc/letsencrypt/renewal/
+        sudo rm -rf /etc/letsencrypt/archive/`
+      16.2. Создаем заново сертификат
+        `sh /root/cleanhouse/scripts/create_certificate.sh`
+      16.3. После создания сертификата должно получится вот так:
+        `root@cleanhouse:/etc/letsencrypt/live/cleanhouse4you.com# ls -n
+        total 4
+        -rw-r--r-- 1 0 0 692 Nov 21 11:59 README
+        lrwxrwxrwx 1 0 0  42 Nov 21 11:59 cert.pem -> ../../archive/cleanhouse4you.com/cert1.pem
+        lrwxrwxrwx 1 0 0  43 Nov 21 11:59 chain.pem -> ../../archive/cleanhouse4you.com/chain1.pem
+        lrwxrwxrwx 1 0 0  47 Nov 21 11:59 fullchain.pem -> ../../archive/cleanhouse4you.com/fullchain1.pem
+        lrwxrwxrwx 1 0 0  45 Nov 21 11:59 privkey.pem -> ../../archive/cleanhouse4you.com/privkey1.pem`
+      16.4. Если проект не работает, то останавливаем проект  `make down` и стартуем заново `make up` и должно все заработать
+      16.5. Вот так выглядит лог, если проект успешно стартовал
+         `
+         ✔ Network cleanhouse_default  Created                                                                                                                                                                 0.1s
+         ✔ Container django            Created                                                                                                                                                                 0.1s
+         ✔ Container nginx             Created                                                                                                                                                                 0.0s
+        Attaching to django, nginx
+        django  | 2024-11-20 02:25:58,006 INFO Set uid to user 0 succeeded
+        django  | 2024-11-20 02:25:58,014 INFO supervisord started with pid 1
+        nginx   | 2024-11-20 02:25:58,257 INFO Set uid to user 0 succeeded
+        nginx   | 2024-11-20 02:25:58,261 INFO supervisord started with pid 1
+        django  | 2024-11-20 02:25:59,021 INFO spawned: 'django' with pid 7
+        nginx   | 2024-11-20 02:25:59,266 INFO spawned: 'nginx' with pid 9
+        nginx   | 2024-11-20 02:26:00,271 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+        django  | 2024-11-20 02:26:00,301 INFO success: django entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)`
+
+
+
+ 
+
+
+### ШПАРГАЛКА ПО ОБЩИМ ПРОБЛЕМАМ С ПРОЕКТОМ
+1. Если делаем `ping cleanhouse4you.com`, а пингует старый ip, необходимо выполнить: `sudo killall -HUP mDNSResponder`
+2. Если не запускается nginx, или запускается, но правильно не работает, здесь можем посмотреть ошибки
+```
+docker exec -it nginx tail -f /var/log/supervisor/nginx.log
+docker exec -it nginx tail -f /var/log/supervisor/nginx_err.log
+stdout_logfile=/var/log/supervisor/nginx.log
+stderr_logfile=/var/log/supervisor/nginx_err.log
+
+docker exec -it django tail -f /var/log/supervisor/django.log
+docker exec -it django tail -f /var/log/supervisor/django_err.log
+stdout_logfile=/var/log/supervisor/django.log
+stderr_logfile=/var/log/supervisor/django_err.log
+```
